@@ -5,6 +5,7 @@ import { validate, v4 as uuidv4 } from "uuid";
 import { APIGatewayProxyHandler } from "aws-lambda";
 
 import { formatToJSON } from "src/utils/formatToJSON";
+import { document, tableName } from "src/utils/dynamodbClient";
 
 interface ICreateTodo {
   title: string;
@@ -35,13 +36,18 @@ export const handle: APIGatewayProxyHandler = async (event) => {
     });
   }
 
-  // TODO Cadastra no Banco de Dados
-
-  return formatToJSON(200, {
+  const data = {
     id: uuidv4(),
     user_id,
     title,
     done: false,
     deadline: dayjs(Number(deadline)).toDate()
-  });
+  }
+
+  await document.put({
+    TableName: tableName,
+    Item: data,
+  }).promise();
+
+  return formatToJSON(200, data);
 }
