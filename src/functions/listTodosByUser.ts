@@ -13,21 +13,13 @@ export const handle: APIGatewayProxyHandler = async (event) => {
     });
   }
 
-  // const { Items } = await document.scan({
-  //   TableName: tableName,
-  // }).promise()
-
-  // const todos = Items.filter((todo) => todo.user_id === user_id)
-
-  const { Items } = await document.query({
+  const response = await document.scan({
     TableName: tableName,
-    KeyConditionExpression: "user_id = :user_id",
-    ExpressionAttributeValues: {
-      ":user_id": user_id
-    }
   }).promise()
 
+  const todos = response.Items.filter((todo) => todo.user_id === user_id)
+
   return formatToJSON(200, {
-    todos: Items
+    todos
   });
 }

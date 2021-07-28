@@ -41,7 +41,7 @@ export const handle: APIGatewayProxyHandler = async (event) => {
     user_id,
     title,
     done: false,
-    deadline: dayjs(Number(deadline)).toDate()
+    deadline: dayjs(deadline).toISOString()
   }
 
   await document.put({
