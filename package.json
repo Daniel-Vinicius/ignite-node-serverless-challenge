@@ -1,5 +1,5 @@
 {
-  "name": "service-08-todo-api-serverless",
+  "name": "ignite-node-serverless-challenge",
   "version": "1.0.0",
   "description": "The latest Node.JS Ignite challenge made by Rocketseat",
   "main": "serverless.ts",
